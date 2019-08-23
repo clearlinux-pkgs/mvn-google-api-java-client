@@ -4,16 +4,20 @@
 #
 Name     : mvn-google-api-java-client
 Version  : 1.23.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/googleapis/google-api-java-client/archive/1.23.0.tar.gz
 Source0  : https://github.com/googleapis/google-api-java-client/archive/1.23.0.tar.gz
-Source1  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client-parent/1.23.0/google-api-client-parent-1.23.0.pom
-Source2  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.jar
-Source3  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.pom
+Source1  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client-parent/1.22.0/google-api-client-parent-1.22.0.pom
+Source2  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client-parent/1.23.0/google-api-client-parent-1.23.0.pom
+Source3  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client/1.22.0/google-api-client-1.22.0.jar
+Source4  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client/1.22.0/google-api-client-1.22.0.pom
+Source5  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.jar
+Source6  : https://repo1.maven.org/maven2/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.pom
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : Apache-2.0
+License  : Apache-2.0 BSD-3-Clause CDDL-1.1 xpp
 Requires: mvn-google-api-java-client-data = %{version}-%{release}
+Requires: mvn-google-api-java-client-license = %{version}-%{release}
 
 %description
 # Google APIs Client Library for Java
@@ -35,19 +39,44 @@ Group: Data
 data components for the mvn-google-api-java-client package.
 
 
+%package license
+Summary: license components for the mvn-google-api-java-client package.
+Group: Default
+
+%description license
+license components for the mvn-google-api-java-client package.
+
+
 %prep
+%setup -q -n google-api-java-client-1.23.0
 
 %build
 
 %install
+mkdir -p %{buildroot}/usr/share/package-licenses/mvn-google-api-java-client
+cp LICENSE %{buildroot}/usr/share/package-licenses/mvn-google-api-java-client/LICENSE
+cp google-api-client-assembly/LICENSE.txt %{buildroot}/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_LICENSE.txt
+cp google-api-client-assembly/dependencies/APACHE-LICENSE.txt %{buildroot}/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_APACHE-LICENSE.txt
+cp google-api-client-assembly/dependencies/BSD-LICENSE.txt %{buildroot}/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_BSD-LICENSE.txt
+cp google-api-client-assembly/dependencies/CDDL-LICENSE.txt %{buildroot}/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_CDDL-LICENSE.txt
+cp google-api-client-assembly/dependencies/xpp3_LICENSE.txt %{buildroot}/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_xpp3_LICENSE.txt
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client-parent/1.22.0
+cp %{SOURCE1} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client-parent/1.22.0/google-api-client-parent-1.22.0.pom
+
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client-parent/1.23.0
-cp %{SOURCE1} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client-parent/1.23.0
+cp %{SOURCE2} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client-parent/1.23.0/google-api-client-parent-1.23.0.pom
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.22.0
+cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.22.0/google-api-client-1.22.0.jar
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.22.0
+cp %{SOURCE4} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.22.0/google-api-client-1.22.0.pom
 
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0
-cp %{SOURCE2} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0
+cp %{SOURCE5} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.jar
 
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0
-cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0
+cp %{SOURCE6} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.pom
 
 
 %files
@@ -55,6 +84,18 @@ cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/com/google/api-client/g
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/java/.m2/repository/com/google/api-client/google-api-client-parent/1.22.0/google-api-client-parent-1.22.0.pom
 /usr/share/java/.m2/repository/com/google/api-client/google-api-client-parent/1.23.0/google-api-client-parent-1.23.0.pom
+/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.22.0/google-api-client-1.22.0.jar
+/usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.22.0/google-api-client-1.22.0.pom
 /usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.jar
 /usr/share/java/.m2/repository/com/google/api-client/google-api-client/1.23.0/google-api-client-1.23.0.pom
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/mvn-google-api-java-client/LICENSE
+/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_LICENSE.txt
+/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_APACHE-LICENSE.txt
+/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_BSD-LICENSE.txt
+/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_CDDL-LICENSE.txt
+/usr/share/package-licenses/mvn-google-api-java-client/google-api-client-assembly_dependencies_xpp3_LICENSE.txt
